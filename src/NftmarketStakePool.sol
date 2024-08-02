@@ -6,6 +6,7 @@ contract NftmarketStakePool {
 
     uint256 public totalFeeInPool;
     uint256 public totalStakeAmount;
+
     uint256 public accumulatedRewardPerToken;
 
     address public immutable NFTMARKET;
@@ -55,7 +56,7 @@ contract NftmarketStakePool {
             accumulatedRewardPerToken) / PRECISION_FACTOR) -
             userToStakeInfo[msg.sender].rewardDebt;
         if (pending > 0) {
-             _safeTransfer(msg.sender, pending);
+            _safeTransfer(msg.sender, pending);
         }
 
         uint256 amount = userToStakeInfo[msg.sender].stakeAmount;
@@ -63,7 +64,7 @@ contract NftmarketStakePool {
         userToStakeInfo[msg.sender].stakeAmount = 0;
         userToStakeInfo[msg.sender].rewardDebt = 0;
 
-         _safeTransfer(msg.sender, amount);
+        _safeTransfer(msg.sender, amount);
     }
     function claimReward() public {
         StakeInfo storage user = userToStakeInfo[msg.sender];
@@ -80,7 +81,6 @@ contract NftmarketStakePool {
             PRECISION_FACTOR;
 
         _safeTransfer(msg.sender, pending);
-
     }
 
     function _safeTransfer(address to, uint256 amount) internal {
